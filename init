@@ -1,1 +1,4 @@
 cordova create lokator com.andrade.lokator lokator
+cordova platform add android
+cordova plugin add cordova-plugin-device 
+cordova plugin add https://github.com/deadRaccoons/cordova-plugin-background-geolocation.git

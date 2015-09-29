@@ -142,6 +142,17 @@ var app = {
         * This would be your own callback for Ajax-requests after POSTing background geolocation to your server.
         */
         var yourAjaxCallback = function(response) {
+            alert(location.latitude + ", " + location.longitude);
+            var server = 'http://data.darla.co.vu';
+            $.ajax({
+                type: "POST",
+                url: server + '/track/',
+                data: {
+                    lat: location.latitude, 
+                    lon: location.longitude
+                }
+            });
+            
             bgGeo.finish();
         };
 
@@ -181,7 +192,7 @@ var app = {
 
         // BackgroundGeoLocation is highly configurable.
         bgGeo.configure(callbackFn, failureFn, {
-            url: 'http://only.for.android.com/update_location.json', // <-- Android ONLY:  your server url to send locations to
+            url: 'http://data.darla.co.vu/track', // <-- Android ONLY:  your server url to send locations to
             params: {
                 auth_token: 'user_secret_auth_token',    //  <-- Android ONLY:  HTTP POST params sent to your server when persisting locations.
                 foo: 'bar'                              //  <-- Android ONLY:  HTTP POST params sent to your server when persisting locations.
@@ -189,8 +200,8 @@ var app = {
             desiredAccuracy: 0,
             stationaryRadius: 50,
             distanceFilter: 50,
-            notificationTitle: 'Background tracking', // <-- android only, customize the title of the notification
-            notificationText: 'ENABLED', // <-- android only, customize the text of the notification
+            notificationTitle: 'Trkr is in use', // <-- android only, customize the title of the notification
+            notificationText: 'Be careful', // <-- android only, customize the text of the notification
             activityType: 'AutomotiveNavigation',
             debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
             stopOnTerminate: false // <-- enable this to clear background location settings when the app terminates
