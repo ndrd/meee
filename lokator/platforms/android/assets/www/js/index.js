@@ -43,6 +43,8 @@ var app = {
     * @property {google.maps.Map} map
     */
     map: undefined,
+
+    steps : [],
     /**
     * @property {google.maps.Marker} location The current location
     */
@@ -66,11 +68,15 @@ var app = {
     btnPace: undefined,
     btnHome: undefined,
     btnReset: undefined,
+    btnHistory : undefined,
+    divPositions: null,
+    divSteps : null,
 
     // Application Constructor  
     initialize: function() {
         this.bindEvents();
         google.maps.event.addDomListener(window, 'load', app.initializeMap);
+
     },
     initializeMap: function() {
         
@@ -80,10 +86,9 @@ var app = {
           zoomControl: false
         };
 
-        var header = $('#header'),
-            footer = $('#footer'),
+        var footer = $('#footer'),
             canvas = $('#map-canvas'),
-            canvasHeight = window.innerHeight - header[0].clientHeight - footer[0].clientHeight;
+            canvasHeight = window.innerHeight - footer[0].clientHeight;
 
         canvas.height(canvasHeight);
         canvas.width(window.clientWidth);
@@ -104,6 +109,12 @@ var app = {
         this.btnReset       = $('button#btn-reset');
         this.btnPace        = $('button#btn-pace');
         this.btnEnabled     = $('button#btn-enabled');
+        this.btnHistory     = $('button#bth-history');
+        this.divPositions   = $('div#positions');
+        this.divSteps       = $('div#steps');
+
+        console.log(this);
+
 
         if (ENV.settings.aggressive == 'true') {
             this.btnPace.addClass('btn-danger');
@@ -122,11 +133,21 @@ var app = {
         this.btnReset.on('click', this.onClickReset);
         this.btnPace.on('click', this.onClickChangePace);
         this.btnEnabled.on('click', this.onClickToggleEnabled);
+        this.btnHistory.on('click', this.showHistory);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
+    showHistory: function() {
+        var divSteps = document.getElementById('steps');
+        var html = '';
+        for(var step in this.steps) {
+            console.log(step);
+        }
+        app.divSteps[0].innerHTML += "1";
+        app.divPositions[0].innerHTML += "2";
+    },
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         app.configureBackgroundGeoLocation();
@@ -160,7 +181,8 @@ var app = {
         * This callback will be executed every time a geolocation is recorded in the background.
         */
         var callbackFn = function(location) {
-            console.log('[js] BackgroundGeoLocation callback:  ' + location.latitude + ',' + location.longitude);
+            var position = ('[P] ' + location.latitude + ',' + location.longitude);
+            app.divPositions[0].innerHTML += '<br>' + position;
             
             // Update our current-position marker.
             app.setCurrentLocation(location);
@@ -198,8 +220,8 @@ var app = {
                 foo: 'bar'                              //  <-- Android ONLY:  HTTP POST params sent to your server when persisting locations.
             },
             desiredAccuracy: 0,
-            stationaryRadius: 50,
-            distanceFilter: 50,
+            stationaryRadius: 10,
+            distanceFilter: 10,
             notificationTitle: 'Trkr is in use', // <-- android only, customize the title of the notification
             notificationText: 'Be careful', // <-- android only, customize the text of the notification
             activityType: 'AutomotiveNavigation',
@@ -208,7 +230,7 @@ var app = {
         });
         
         // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
-        var settings = ENV.settings;
+        var settings = 'true';
 
         if (settings.enabled == 'true') {
             bgGeo.start();
@@ -293,7 +315,7 @@ var app = {
         }, function() {}, {
             enableHighAccuracy: true,
             maximumAge: 5000,
-            frequency: 10000,
+            frequency: 1000,
             timeout: 10000
         });
     },
@@ -354,6 +376,7 @@ var app = {
         
         if (app.previousLocation) {
             var prevLocation = app.previousLocation;
+            app.steps.push(previousLocation);
             // Drop a breadcrumb of where we've been.
             app.locations.push(new google.maps.Marker({
                 icon: {
