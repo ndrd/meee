@@ -6830,7 +6830,7 @@ input.mdl-button[type="submit"] {
   overflow: hidden; }
   @media screen and (max-width: 1024px) {
     .mdl-layout__tab {
-      padding: 0 12px 0 12px; } }
+      padding: 0 0px 0 0px; } }
   .mdl-layout--fixed-tabs .mdl-layout__tab {
     float: none;
     -webkit-box-flex: 1;
