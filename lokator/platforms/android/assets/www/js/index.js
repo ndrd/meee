@@ -143,10 +143,10 @@ var app = {
         var divSteps = document.getElementById('steps');
         var html = '';
         for(var step in this.steps) {
-            console.log(step);
+            html += step;
         }
-        app.divSteps[0].innerHTML += "1";
-        app.divPositions[0].innerHTML += "2";
+        app.divSteps[0].innerHTML += html;
+        app.divPositions[0].innerHTML += html;
     },
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
@@ -285,6 +285,7 @@ var app = {
         // Clear Polyline.
         app.path.setMap(null);
         app.path = undefined;
+        app.divSteps[0].innerHTML= '';
     },
     onClickToggleEnabled: function(value) {
         var bgGeo       = window.plugins.backgroundGeoLocation,
@@ -315,8 +316,8 @@ var app = {
         }, function() {}, {
             enableHighAccuracy: true,
             maximumAge: 5000,
-            frequency: 1000,
-            timeout: 10000
+            frequency: 800,
+            timeout: 8000
         });
     },
     stopPositionWatch: function() {
@@ -373,6 +374,7 @@ var app = {
             });
         }
         var latlng = new google.maps.LatLng(location.latitude, location.longitude);
+        app.divSteps[0].innerHTML += location.latitude + ', '+ location.longitude + '<br>';
         
         if (app.previousLocation) {
             var prevLocation = app.previousLocation;
