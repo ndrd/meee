@@ -10,7 +10,7 @@
 	flex-flow: row wrap;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    padding: 32px 16px;
+    padding: 22px 16px;
     color: rgb(158,158,158);
 }
 #map_record {
@@ -26,4 +26,21 @@
 	margin-top: 10px;
 	width: 50px;
 	height: 50px;
+}
+
+.demo-card-image.mdl-card {
+  width: calc(100% - 16px);
+  margin: 8px;
+  height: 222px;
+  background: url('../img/image_card.jpg') center / cover;
+}
+.demo-card-image > .mdl-card__actions {
+  height: 52px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.demo-card-image__filename {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
 }
