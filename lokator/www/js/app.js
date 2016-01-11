@@ -1,4 +1,8 @@
-$(function() {
+var showHola = function () {
+	$("#title").text("кати");
+};
+
+var cb = function () {
 	var _main_map = Core.Map.init('map_record', true);
 
 	/* record buttons */
@@ -24,6 +28,25 @@ $(function() {
 	$record.on('click', (e) => {	
 		alert('saving track');
 	})
+}
+
+$(function() {
+	cb(); 
+
+
+});
+
+document.addEventListener('deviceready', function() {
+	if (navigator.notification) { // Override default HTML alert with native dialog
+            window.alert = function (message) {
+                navigator.notification.alert(
+                    message,    // message
+                    null,       // callback
+                    "Workshop", // title
+                    'OK'        // buttonName
+                );
+            };
+    }
 
 
 });
