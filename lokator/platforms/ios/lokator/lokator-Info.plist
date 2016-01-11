@@ -54,7 +54,7 @@
       </dict>
     </dict>
     <key>CFBundleIdentifier</key>
-    <string>com.andrade.lokator</string>
+    <string>com.ext.lokator</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
