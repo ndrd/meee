@@ -23,10 +23,11 @@ document.addEventListener('deviceready', function () {
 
 jQuery( document ).ready(function( $ ) {
 	var map = app.map;
+  var streamer  = Core.Streamer.init();
 	/* record buttons */
 	var $locate = $("#locate"),
-		$brdcst = $("#broadcast"),
-		$record = $("#record");
+  		$brdcst = $("#broadcast"),
+  		$record = $("#record");
 
 	var $ss 	= $("#ss");
 
@@ -35,16 +36,17 @@ jQuery( document ).ready(function( $ ) {
 		alert('server set to: ', $(this).val());
 	});
 
- 	$locate.on('click', function (e) {
-  		app.getCurrentPosition();
-  	});
+	$locate.on('click', function (e) {
+    var map = app.map;
+		map.getCurrentPosition();
+	});
 
-  	$brdcst.on('click', function (e) {
-  		alert('emit to socket');
-  	});
+	$brdcst.on('click', function (e) {
+		streamer.sendPosition(app.map.location);
+	});
 
-  	$record.on('click', function (e) {	
-  		alert('saving track');
-  	})
+	$record.on('click', function (e) {	
+		alert('saving track');
+	})
 
 });

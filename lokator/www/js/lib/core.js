@@ -9,7 +9,37 @@ Core.Storage = {
 	}
 };
 
-Core.Socket = {
+Core.Streamer = {
+	servers : ['http://192.168.0.6:8001'],
+	instance : null,
+	storage : Core.Storage,
+
+	init : function () {
+		if (this.instance == null)
+			this.instance = sckt = io.connect(this.getHost());
+		return this;
+	},
+
+	getHost : function () {
+		return this.servers[Math.floor(Math.random() * this.servers.length)];
+	},
+
+	newSession : function () {
+
+	},
+
+	testConn : function (e) {
+		alert('Conectado con el streamer');
+	},
+
+	sendPosition : function (data) {
+		this.instance.emit('io:msg', {
+			lat : data.latitude,
+			lon : data.longitude,
+			t : new Date().getTime(),
+			s : data.speed
+		});
+	}
 };
 
 Core.Map = {
