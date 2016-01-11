@@ -365,12 +365,12 @@ public class LocationUpdateService extends Service implements LocationListener {
                 isAcquiringStationaryLocation = false;
                 startMonitoringStationaryRegion(stationaryLocation);
                 if (isDebugging) {
-                    //startTone("long_beep");
+                    startTone("long_beep");
                 }
             } else {
                 // Unacceptable stationary-location: bail-out and wait for another.
                 if (isDebugging) {
-                    //startTone("beep");
+                    startTone("beep");
                 }
                 return;
             }
@@ -378,20 +378,20 @@ public class LocationUpdateService extends Service implements LocationListener {
             if (++locationAcquisitionAttempts == MAX_SPEED_ACQUISITION_ATTEMPTS) {
                 // Got enough samples, assume we're confident in reported speed now.  Play "woohoo" sound.
                 if (isDebugging) {
-                    //startTone("doodly_doo");
+                    startTone("doodly_doo");
                 }
                 isAcquiringSpeed = false;
                 scaledDistanceFilter = calculateDistanceFilter(location.getSpeed());
                 setPace(true);
             } else {
                 if (isDebugging) {
-                    //startTone("beep");
+                    startTone("beep");
                 }
                 return;
             }
         } else if (isMoving) {
             if (isDebugging) {
-                //startTone("beep");
+                startTone("beep");
             }
             // Only reset stationaryAlarm when accurate speed is detected, prevents spurious locations from resetting when stopped.
             if ( (location.getSpeed() >= 1) && (location.getAccuracy() <= stationaryRadius) ) {
@@ -428,7 +428,7 @@ public class LocationUpdateService extends Service implements LocationListener {
      */
     private void startTone(String name) {
         int tone = 0;
-        int duration = 000;
+        int duration = 1000;
 
         if (name.equals("beep")) {
             tone = ToneGenerator.TONE_PROP_BEEP;
@@ -492,7 +492,7 @@ public class LocationUpdateService extends Service implements LocationListener {
             return;
         }
         if (isDebugging) {
-            //////////startTone("beep");
+            startTone("beep");
         }
     float distance = abs(location.distanceTo(stationaryLocation) - stationaryLocation.getAccuracy() - location.getAccuracy());
 
@@ -517,7 +517,7 @@ public class LocationUpdateService extends Service implements LocationListener {
     public void onExitStationaryRegion(Location location) {
         // Filter-out spurious region-exits:  must have at least a little speed to move out of stationary-region
         if (isDebugging) {
-            ////////startTone("beep_beep_beep");
+            startTone("beep_beep_beep");
         }
         // Cancel the periodic stationary location monitor alarm.
         alarmManager.cancel(stationaryLocationPollingPI);
@@ -536,7 +536,7 @@ public class LocationUpdateService extends Service implements LocationListener {
         Log.i(TAG, "- onCellLocationChange" + cellLocation.toString());
         if (isDebugging) {
             Toast.makeText(this, "Cellular location change", Toast.LENGTH_LONG).show();
-            //////startTone("chirp_chirp_chirp");
+            startTone("chirp_chirp_chirp");
         }
         if (!isMoving && stationaryLocation != null) {
             criteria.setAccuracy(Criteria.ACCURACY_FINE);
@@ -583,7 +583,7 @@ public class LocationUpdateService extends Service implements LocationListener {
          {
              Log.i(TAG, "- stationaryLocationMonitorReceiver fired");
              if (isDebugging) {
-                 ////startTone("dialtone");
+                 startTone("dialtone");
              }
              criteria.setAccuracy(Criteria.ACCURACY_FINE);
              criteria.setHorizontalAccuracy(Criteria.ACCURACY_HIGH);

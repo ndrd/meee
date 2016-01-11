@@ -6,15 +6,20 @@
 }
 .full {width: 100%; height: 100%;}
 .record_controls {
-	height: 70px;
+	height: 60px;
 	flex-flow: row wrap;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    padding: 22px 16px;
+    padding: 16px 16px;
     color: rgb(158,158,158);
+
+}
+#record {
+	background-color: rgb(63,81,181);
 }
 #map_record {
-	height: 400px;
+	height: calc(100% - 230px);
+	min-height: 420px;
 	background-color: black;
 }
 .recordButton {

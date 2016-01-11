@@ -7,7 +7,8 @@ var strmr_conf = {
 	}
 }
 
-var st = {
+
+var Stream = {
 	socket : null,
 
 	init : function (conf) {
