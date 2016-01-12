@@ -6,17 +6,36 @@ Core.Storage = {
 	},
 	set : function(key, value) {
 		return window.localStorage.setItem(key, value);
-	}
+	}, 
+
 };
 
 Core.Streamer = {
-	servers : ['http://192.168.0.6:8001'],
+	servers : ['http://localhost:8001'],
 	instance : null,
 	storage : Core.Storage,
+	currentChannel : null,
+	callbacks  : {},
 
-	init : function () {
-		if (this.instance == null)
+
+	init : function (events) {
+		if (this.instance != null)
+			return this;
+		else
 			this.instance = sckt = io.connect(this.getHost());
+
+		var _ = this.instance;
+		var self = this;
+
+		if (events.length)
+			events.map(function(e) {
+				_.on(e, function(data) {
+					if (e in self.callbacks) {
+						self.callbacks[e].call(self, data);
+					}
+				});
+			});
+
 		return this;
 	},
 
@@ -24,8 +43,9 @@ Core.Streamer = {
 		return this.servers[Math.floor(Math.random() * this.servers.length)];
 	},
 
-	newSession : function () {
-
+	newSession : function (callback) {
+		this.callbacks['track:started'] = callback;
+		this.instance.emit('track:start', 'anon');
 	},
 
 	testConn : function (e) {
@@ -33,11 +53,20 @@ Core.Streamer = {
 	},
 
 	sendPosition : function (data) {
-		this.instance.emit('io:msg', {
+		var self = this;
+		
+		if (!self.currentChannel) {
+			self.newSession(function(data) {
+				self.currentChannel = data.uid;
+			});
+		}
+
+		this.instance.emit('track:update', {
 			lat : data.latitude,
 			lon : data.longitude,
 			t : new Date().getTime(),
-			s : data.speed
+			s : data.speed,
+			uid : self.currentChannel
 		});
 	}
 };
