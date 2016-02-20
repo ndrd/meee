@@ -3,6 +3,7 @@ module.exports = [
     {
         "file": "plugins/cordova-plugin-console/www/logger.js",
         "id": "cordova-plugin-console.logger",
+        "pluginId": "cordova-plugin-console",
         "clobbers": [
             "cordova.logger"
         ]
@@ -10,6 +11,7 @@ module.exports = [
     {
         "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
         "id": "cordova-plugin-console.console",
+        "pluginId": "cordova-plugin-console",
         "clobbers": [
             "console"
         ]
@@ -17,6 +19,7 @@ module.exports = [
     {
         "file": "plugins/cordova-plugin-device/www/device.js",
         "id": "cordova-plugin-device.device",
+        "pluginId": "cordova-plugin-device",
         "clobbers": [
             "device"
         ]
@@ -24,6 +27,7 @@ module.exports = [
     {
         "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
         "id": "org.apache.cordova.dialogs.notification",
+        "pluginId": "org.apache.cordova.dialogs",
         "merges": [
             "navigator.notification"
         ]
@@ -31,6 +35,7 @@ module.exports = [
     {
         "file": "plugins/org.apache.cordova.geolocation/www/Coordinates.js",
         "id": "org.apache.cordova.geolocation.Coordinates",
+        "pluginId": "org.apache.cordova.geolocation",
         "clobbers": [
             "Coordinates"
         ]
@@ -38,6 +43,7 @@ module.exports = [
     {
         "file": "plugins/org.apache.cordova.geolocation/www/PositionError.js",
         "id": "org.apache.cordova.geolocation.PositionError",
+        "pluginId": "org.apache.cordova.geolocation",
         "clobbers": [
             "PositionError"
         ]
@@ -45,6 +51,7 @@ module.exports = [
     {
         "file": "plugins/org.apache.cordova.geolocation/www/Position.js",
         "id": "org.apache.cordova.geolocation.Position",
+        "pluginId": "org.apache.cordova.geolocation",
         "clobbers": [
             "Position"
         ]
@@ -52,6 +59,7 @@ module.exports = [
     {
         "file": "plugins/org.apache.cordova.geolocation/www/geolocation.js",
         "id": "org.apache.cordova.geolocation.geolocation",
+        "pluginId": "org.apache.cordova.geolocation",
         "clobbers": [
             "navigator.geolocation"
         ]
@@ -59,6 +67,7 @@ module.exports = [
     {
         "file": "plugins/org.transistorsoft.cordova.background-geolocation/www/BackgroundGeoLocation.js",
         "id": "org.transistorsoft.cordova.background-geolocation.BackgroundGeoLocation",
+        "pluginId": "org.transistorsoft.cordova.background-geolocation",
         "clobbers": [
             "plugins.backgroundGeoLocation"
         ]
