@@ -25,6 +25,11 @@
 	min-height: 417px;
 	background-color: black;
 }
+#record_stats {
+	height: calc(100% - 100px);
+	min-height: 417px;
+	background-color: black;
+}
 .recordButton {
 	width: 70px !important;
 	height: 70px !important;

@@ -1,5 +1,34 @@
 var Core = Core || {};
 
+function Event(name){
+  this.name = name;
+  this.callbacks = [];
+}
+Event.prototype.registerCallback = function(callback){
+  this.callbacks.push(callback);
+}
+
+function Reactor(){
+  this.events = {};
+}
+
+Reactor.prototype.registerEvent = function(eventName){
+  var event = new Event(eventName);
+  this.events[eventName] = event;
+};
+
+Reactor.prototype.fire = function(eventName, eventArgs){
+  this.events[eventName].callbacks.forEach(function(callback){
+    callback(eventArgs);
+  });
+};
+
+Reactor.prototype.addEventListener = function(eventName, callback){
+  this.events[eventName].registerCallback(callback);
+};
+
+var reactor = new Reactor();
+
 Core.Storage = {
 	get :  function(key) {
 		return window.localStorage.getItem(key);
@@ -23,19 +52,6 @@ Core.Streamer = {
 			return this;
 		else
 			this.instance = sckt = io.connect(this.getHost());
-
-		var _ = this.instance;
-		var self = this;
-
-		if (events.length)
-			events.map(function(e) {
-				_.on(e, function(data) {
-					if (e in self.callbacks) {
-						self.callbacks[e].call(self, data);
-					}
-				});
-			});
-
 		return this;
 	},
 
